@@ -591,13 +591,17 @@
     -->
 
     <script>
-      const isDark = localStorage.getItem('isDark')
+      const isDark = !localStorage.getItem('isLight') && window?.matchMedia && window?.matchMedia('(prefers-color-scheme: dark)').matches
       const dataset = document.body.dataset
 
       if (isDark) {
         dataset.scheme = "dark"
+        localStorage.removeItem('isLight')
+        localStorage.setItem('isDark', 'true')
       } else {
-        dataset.scheme = "default"
+        dataset.scheme = "light"
+        localStorage.removeItem('isDark')
+        localStorage.setItem('isLight', 'true')
       }
 
       // Extension: prevent 2 tabs
